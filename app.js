@@ -9,9 +9,12 @@ app.set("view engine", "ejs");
 //to use body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//array to save User inputs
 let items = [];
 
+//response to GET request to HOME route
 app.get("/", (req, res) => {
+  //setting cuurent day
   const currentDay = new Date();
   const options = {
     weekday: "long",
@@ -21,9 +24,14 @@ app.get("/", (req, res) => {
   };
   const day = currentDay.toLocaleDateString("en-IN", options);
 
-  res.render("List.ejs", { dayInfo: day, listItems: items });
+  //pass variables to List.ejs file to render
+  res.render("List.ejs", {
+    dayInfo: day,
+    listItems: items,
+  });
 });
 
+//response to POST request to HOME route
 app.post("/", (req, res) => {
   const item = req.body.itemInput;
   items.push(item);
