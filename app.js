@@ -14,6 +14,7 @@ app.use(express.static("public"));
 
 //array to save User inputs
 let items = [];
+let workItems = [];
 
 //response to GET request to HOME route
 app.get("/", (req, res) => {
@@ -29,7 +30,7 @@ app.get("/", (req, res) => {
 
   //pass variables to List.ejs file to render
   res.render("List.ejs", {
-    dayInfo: day,
+    headingText: day,
     listItems: items,
   });
 });
@@ -37,8 +38,21 @@ app.get("/", (req, res) => {
 //response to POST request to HOME route
 app.post("/", (req, res) => {
   const item = req.body.itemInput;
-  items.push(item);
-  res.redirect("/");
+
+  if (req.body.list === "Work") {
+    workItems.push(item);
+    res.redirect("/work");
+  } else {
+    items.push(item);
+    res.redirect("/");
+  }
+});
+
+app.get("/work", (req, res) => {
+  res.render("List", {
+    headingText: "Work List",
+    listItems: workItems,
+  });
 });
 
 app.listen(3000, () => console.log("Port started at port 3000!"));
