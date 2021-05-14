@@ -9,6 +9,9 @@ app.set("view engine", "ejs");
 //to use body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//set up folder to access static files
+app.use(express.static("public"));
+
 //array to save User inputs
 let items = [];
 
